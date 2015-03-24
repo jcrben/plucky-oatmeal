@@ -65,14 +65,20 @@ exports.logoutUser = function(req, res){
 exports.checkPresenter = function(req, res, rooms) {
   var roomName = req.body.roomname;
   var userName = req.session.passport.user.username;
+  var found = false;
   console.log('inside the checkPresenter function, about to log req.session: ', req.session);
 
   for (var room in rooms) {
     if (room === roomName) {
-      res.set({roomname: room, presenter: rooms[room].presenter, username: userName});
+      found = true;
     }
   }
-  res.send('0');
+
+  if (found) {
+    res.send({roomname: room, presenter: rooms[room].presenter, username: userName});
+  } else {
+    res.send('0');
+  }
 };
 
 // If the room is available for creation, return 1
