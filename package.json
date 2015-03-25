@@ -92,6 +92,7 @@
     "ws": "^0.7.1"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "npm install -g bower && bower install"
   }
 }
