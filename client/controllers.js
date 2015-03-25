@@ -252,7 +252,7 @@ micControllers.controller('PresenterControl', ['$scope', '$sce', 'presenterRTC',
     // if you don't go through angular and instead just set the src w/vanillaJS it does work, so things
     // are fine on the RTC side...
     var stream = $sce.trustAsResourceUrl(window.URL.createObjectURL(event.stream));
-    
+
     //Just testing w/vanillajs here, to make sure the remote stream actually works... angular can be fussy
     addVideoElem(stream);
 
@@ -276,7 +276,7 @@ micControllers.controller('PresenterControl', ['$scope', '$sce', 'presenterRTC',
 micControllers.config(['baseRTCProvider', function(baseRTCProvider) {
   console.log('hey! in the config');
 
-  baseRTCProvider.setSignalServer('ws://2ba5f7b1.ngrok.com');
+  baseRTCProvider.setSignalServer('ws://limitless-depths-6704.herokuapp.com:3434');
   // baseRTCProvider.setSignalServer('ws://localhost:3434'); //normally must be set up by app
   // baseRTCProvider.setSignalServer('ws://307a1d89.ngrok.com'); //normally must be set up by app
 
