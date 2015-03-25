@@ -10,6 +10,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-casperjs');
   grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-nodemon');
 
 
   // in what order should the files be concatenated
@@ -120,6 +121,16 @@ module.exports = function(grunt) {
         files: {
           'results/casper': 'test/e2e/**/*.js'
         }
+      }
+    },
+
+    nodemon: {
+      prod: {
+        script: 'dist/server/server.js',
+        env: {
+          PORT: '80',
+          NODE_ENV: 'production'
+        },
       }
     },
 
