@@ -162,7 +162,7 @@ var server = app.listen(servePort, function(){
 // RTC clients in same browser... I think).
 var WebSocketServer = require('ws').Server;
 
-var wsServer = new WebSocketServer({ port: 3434 });
+var wsServer = new WebSocketServer({ server: server });
 
 // Utility function to broadcast a message to all connected clients,
 // totally indiscriminately
