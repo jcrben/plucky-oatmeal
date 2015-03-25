@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
   extended: true
-})); 
+}));
 
 app.get('/', util.checkUser, function(req, res) {
     res.send('1');
@@ -67,7 +67,7 @@ passport.use(new GithubStrategy({
   User.findOrCreate({githubId: profile.id, username: profile.displayName}, function(err, user) {
     return done(err, user);
   });
-  
+
 
   // return done(null, {
   //   accessToken: accessToken,
@@ -100,7 +100,7 @@ passport.deserializeUser(function(id, done){
 //   })
 // });
 
-// In auth page to authenticate, might need to move it. 
+// In auth page to authenticate, might need to move it.
 app.get('/auth/github', function(req, res, next) {
   console.log('in the /auth path, trying to authenticate the user with passport');
   next();
@@ -112,7 +112,7 @@ app.get('/auth/github', function(req, res, next) {
 });
 
 app.get('/auth/error', auth.error);
-app.get('/auth/github/callback', 
+app.get('/auth/github/callback',
   passport.authenticate('github', {failureRedirect: '/auth/error'}),
   auth.callback
 );

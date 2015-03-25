@@ -78,7 +78,7 @@ micControllers.controller('MainControl', ['$scope', '$location', 'Room', functio
     // We will use the presenter string/object to tell the audienceRTC who to
     // connect to.
 
-    var returnPresenter = Room.returnPresenter($scope, room); 
+    var returnPresenter = Room.returnPresenter($scope, room);
     console.log('logging the returnPresenter variable: ', returnPresenter);
     console.log('logging out $scope.room to see if we stored room info: ', $scope.room);
     console.log('let\'s join a room!' , room);
@@ -168,7 +168,7 @@ micControllers.controller('AudienceControl', ['$scope', '$sce', 'audienceRTC', '
 
 
 // The AudienceController utilizes $rootScope to pass user information between controllers.
-// This is not an ideal implementation, and the 'Room' service should be utilized instead.  
+// This is not an ideal implementation, and the 'Room' service should be utilized instead.
 micControllers.controller('PresenterControl', ['$scope', '$sce', 'presenterRTC', '$rootScope', function($scope, $sce, presenterRTC, $rootScope) {
   var addVideoElem = function (url) {
     console.log('adding video!');
@@ -188,7 +188,7 @@ micControllers.controller('PresenterControl', ['$scope', '$sce', 'presenterRTC',
       // console.log('testing');
       console.log($rootScope.details.roomname);
       console.log($rootScope.details.presenter);
-      presenterRTC.connect({ name: $rootScope.details.roomname, presenter: $rootScope.details.presenter}, $rootScope.details.presenter); 
+      presenterRTC.connect({ name: $rootScope.details.roomname, presenter: $rootScope.details.presenter}, $rootScope.details.presenter);
       console.log('testingEnd');
     // };
   });
@@ -217,7 +217,7 @@ micControllers.controller('PresenterControl', ['$scope', '$sce', 'presenterRTC',
   presenterRTC.on('onsignalingstatechange', function(event, remoteUser, pc){
     console.log('onsignalingstatechange -------');
   });
-  
+
   // In order to properly utilize the onremovestream listener, the handshake between the peers must be renegotiated.
   // http://stackoverflow.com/questions/16478486/webrtc-function-removestream-dont-launch-event-onremovestream-javascript
   presenterRTC.on('onremovestream', function(event, remoteUser, pc){
@@ -252,7 +252,7 @@ micControllers.controller('PresenterControl', ['$scope', '$sce', 'presenterRTC',
     // if you don't go through angular and instead just set the src w/vanillaJS it does work, so things
     // are fine on the RTC side...
     var stream = $sce.trustAsResourceUrl(window.URL.createObjectURL(event.stream));
-
+    
     //Just testing w/vanillajs here, to make sure the remote stream actually works... angular can be fussy
     addVideoElem(stream);
 
@@ -275,14 +275,14 @@ micControllers.controller('PresenterControl', ['$scope', '$sce', 'presenterRTC',
 
 micControllers.config(['baseRTCProvider', function(baseRTCProvider) {
   console.log('hey! in the config');
-  
-  baseRTCProvider.setSignalServer('ws://3a3cddc1.ngrok.com');
+
+  baseRTCProvider.setSignalServer('ws://2ba5f7b1.ngrok.com');
   // baseRTCProvider.setSignalServer('ws://localhost:3434'); //normally must be set up by app
   // baseRTCProvider.setSignalServer('ws://307a1d89.ngrok.com'); //normally must be set up by app
 
   baseRTCProvider.setPeerConnectionConfig({
     'iceServers': [
-      {'url': 'stun:stun.services.mozilla.com'}, 
+      {'url': 'stun:stun.services.mozilla.com'},
       {'url': 'stun:stun.l.google.com:19302'}
     ]
   });
