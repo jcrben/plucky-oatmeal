@@ -17,13 +17,6 @@ machine:
     CIRCLE_ENV: test
 
 
-## dependencies
-dependencies:
-  pre:
-    - npm install -g bower
-    - bower install
-
-
 ## deployment commands
 deployment:
   production:
