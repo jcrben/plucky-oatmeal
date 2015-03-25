@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
   extended: true
-})); 
+}));
 
 app.get('/', util.checkUser, function(req, res) {
     res.send('1');
@@ -67,7 +67,7 @@ passport.use(new GithubStrategy({
   User.findOrCreate({githubId: profile.id, username: profile.displayName}, function(err, user) {
     return done(err, user);
   });
-  
+
 
   // return done(null, {
   //   accessToken: accessToken,
@@ -100,7 +100,7 @@ passport.deserializeUser(function(id, done){
 //   })
 // });
 
-// In auth page to authenticate, might need to move it. 
+// In auth page to authenticate, might need to move it.
 app.get('/auth/github', function(req, res, next) {
   console.log('in the /auth path, trying to authenticate the user with passport');
   next();
@@ -112,7 +112,7 @@ app.get('/auth/github', function(req, res, next) {
 });
 
 app.get('/auth/error', auth.error);
-app.get('/auth/github/callback', 
+app.get('/auth/github/callback',
   passport.authenticate('github', {failureRedirect: '/auth/error'}),
   auth.callback
 );
@@ -150,3 +150,34 @@ var server = app.listen(servePort, function(){
 //   var inputRoom = pathname.toString().split('/')[2];  //get the input and the room name
 //   rooms = handler.accessRoom(req, res, rooms, inputRoom); //
 // });
+
+
+///////////////////////////////////////////////////////////////////////////
+//                            Signal Server                              //
+///////////////////////////////////////////////////////////////////////////
+
+// This is a simple web socket server. All it does is accept connections
+// and rebroadcast messages from any client to all clients, including the
+// client that sent it (which we need for our test code to run with both
+// RTC clients in same browser... I think).
+var WebSocketServer = require('ws').Server;
+
+var wsServer = new WebSocketServer({ port: 3434 });
+
+// Utility function to broadcast a message to all connected clients,
+// totally indiscriminately
+wsServer.broadcast = function (data) {
+  this.clients.forEach(function (client) {
+    client.send(data);  //send to all clients, including initial sender
+  });
+};
+
+// When we get new connections, set each connection up with
+// an onmessage handler that will broadcast any messages it
+// sends to all other connections (using the broadcast utility fn above)
+wsServer.on('connection', function (ws) {
+  ws.on('message', function (message) {
+    console.log('broadcasting message', message);
+    wsServer.broadcast(message);
+  });
+});

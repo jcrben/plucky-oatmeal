@@ -65,14 +65,20 @@ exports.logoutUser = function(req, res){
 exports.checkPresenter = function(req, res, rooms) {
   var roomName = req.body.roomname;
   var userName = req.session.passport.user.username;
+  var found = false;
   console.log('inside the checkPresenter function, about to log req.session: ', req.session);
 
   for (var room in rooms) {
     if (room === roomName) {
-      res.send({roomname: room, presenter: rooms[room].presenter, username: userName});
+      found = true;
     }
   }
-  res.send('0');
+
+  if (found) {
+    res.send({roomname: room, presenter: rooms[room].presenter, username: userName});
+  } else {
+    res.send('0');
+  }
 };
 
 // If the room is available for creation, return 1
@@ -82,7 +88,7 @@ exports.checkRoom = function(req, res, rooms){
     res.send(401);
     return;
   }
-  
+
   var roomName = req.body.roomname;
   var lecturerName = req.session.passport.user.username;
 
@@ -103,7 +109,7 @@ exports.checkRoom = function(req, res, rooms){
 // If the room is available for access, return the room object
 // If the room is already in the list, return 0
 exports.accessRoom = function(req, res, rooms, inputRoom){
-  // Get user 
+  // Get user
   var studentName = req.body.name;
 
   // if room exists
@@ -111,11 +117,11 @@ exports.accessRoom = function(req, res, rooms, inputRoom){
     if (key === inputRoom){
       // Add student to the room
       rooms[inputRoom][audience].push(studentName);
-      res.send(rooms[inputRoom]); //send back inputRoom 
+      res.send(rooms[inputRoom]); //send back inputRoom
       return rooms;
     }
   }
-  
+
   res.send('0');
   return rooms;
 };
