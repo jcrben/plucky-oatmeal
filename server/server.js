@@ -134,7 +134,9 @@ app.post('/rooms/asAudience', util.checkUser, function(req, res, next){
   handler.checkPresenter(req, res, rooms);
 });
 
-var server = app.listen(8000, function(){
+var servePort = process.env.NODE_ENV_PORT || 8000;
+
+var server = app.listen(servePort, function(){
     console.log('App connected');
 });
 

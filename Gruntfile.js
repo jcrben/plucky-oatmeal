@@ -78,6 +78,13 @@ module.exports = function(grunt) {
         options: {
           script: 'dist/server/server.js'
         }
+      },
+      prod: {
+        options: {
+          script: 'dist/server/server.js',
+          node_env: 'production',
+          port: 80
+        }
       }
     },
 
@@ -149,6 +156,9 @@ module.exports = function(grunt) {
     }
   });
 
+  // Serve the app in production environment
+  grunt.registerTask('serve', ['build', 'express:prod']);
+
   // Perform a build
   grunt.registerTask('build', [ 'jshint', 'clean', 'copy', 'concat', 'uglify']);
 
@@ -156,10 +166,10 @@ module.exports = function(grunt) {
   grunt.registerTask('teste2e', [ 'express:dev', 'casperjs' ]);
 
   // Run client tests once
-  grunt.registerTask('testClient', [ 'karma:single' ]);
+  grunt.registerTask('testClient', ['karma:single' ]);
 
   // Run all tests once
-  grunt.registerTask('test', [ 'testClient', 'teste2e']);
+  grunt.registerTask('test', [ 'build', 'testClient', 'teste2e']);
 
   // Run all tests once
   grunt.registerTask('ci', [ 'karma:ci', 'express:dev', 'casperjs' ]);

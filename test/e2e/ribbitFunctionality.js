@@ -1,5 +1,5 @@
 /* globals casper, document */
-casper.test.begin('App is setup correctly', 2, function suite(test) {
+casper.test.begin('App is setup correctly', function suite(test) {
   casper.start('http://localhost:3000/', function() {
   });
 
@@ -7,5 +7,3 @@ casper.test.begin('App is setup correctly', 2, function suite(test) {
     test.done();
   });
 });
-
-

@@ -1,0 +1,32 @@
+## the test machine
+machine:
+
+  timezone:
+    UTC
+
+  # Version of node to use
+  node:
+    version: 0.12.0
+
+  # Override /etc/hosts
+  hosts:
+    circlehost: 127.0.0.1
+
+  # Add some environment variables
+  environment:
+    CIRCLE_ENV: test
+
+
+## dependencies
+dependencies:
+  pre:
+    - npm install -g bower
+    - bower install
+
+
+## deployment commands
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: limitless-depths-6704

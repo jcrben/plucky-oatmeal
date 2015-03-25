@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "A mic in every hand; hear anyone in the audience instantly. Crush the sound barrier with ribbit.",
   "main": "index.html",
-  "scripts": {
-    "test": "grunt test"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/careful-harmonica/plucky-oatmeal.git"
@@ -96,6 +93,6 @@
     "ws": "^0.7.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   }
 }
