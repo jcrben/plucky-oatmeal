@@ -168,7 +168,7 @@ module.exports = function(grunt) {
   });
 
   // Serve the app in production environment
-  grunt.registerTask('serve', ['build', 'express:prod']);
+  grunt.registerTask('serve', ['build', 'nodemon']);
 
   // Perform a build
   grunt.registerTask('build', [ 'jshint', 'clean', 'copy', 'concat', 'uglify']);
