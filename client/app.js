@@ -4,7 +4,9 @@ var micApp = angular.module('micApp', [
   'micServices'
 ]);
 
-micApp.config(['$routeProvider', '$httpProvider', 
+micApp.constant('io', 'io');
+
+micApp.config(['$routeProvider', '$httpProvider',
   function($routeProvider, $httpProvider) {
 
 
@@ -30,12 +32,12 @@ micApp.config(['$routeProvider', '$httpProvider',
         if (user !== '0') {
           console.log('logged in', user);
           deferred.resolve();
-        } else { 
+        } else {
           $rootScope.message = 'You need to log in.';
           console.log('you are not logged in', user);
-          deferred.reject(); 
+          deferred.reject();
           $location.url('/login');
-        } 
+        }
       });
 
       return deferred.promise;

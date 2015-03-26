@@ -276,9 +276,9 @@ micControllers.controller('PresenterControl', ['$scope', '$sce', 'presenterRTC',
 micControllers.config(['baseRTCProvider', function(baseRTCProvider) {
   console.log('hey! in the config');
 
-  baseRTCProvider.setSignalServer('ws://limitless-depths-6704.herokuapp.com');
+  // baseRTCProvider.setSignalServer('ws://limitless-depths-6704.herokuapp.com');
+  baseRTCProvider.setSignalServer('ws://ribtest.ngrok.com'); //normally must be set up by app
   // baseRTCProvider.setSignalServer('ws://localhost:5000'); //normally must be set up by app
-  // baseRTCProvider.setSignalServer('ws://307a1d89.ngrok.com'); //normally must be set up by app
 
   baseRTCProvider.setPeerConnectionConfig({
     'iceServers': [

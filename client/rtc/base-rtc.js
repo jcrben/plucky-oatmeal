@@ -39,13 +39,19 @@ var makeBaseRTC = function (options) {
 
   // Connect to our signal server. We talk with other clients over
   // this server in order to establish peer connections to them.
-  baseRTC.signalServer = new WebSocket(options.signalServer);
+  // baseRTC.signalServer = new WebSocket(options.signalServer);
+  baseRTC.signalServer = io();
   //Wait for signal server connection to open before we're "ready"
   setupTasks.signalServer = false;
-  baseRTC.signalServer.onopen = function () {
+  // baseRTC.signalServer.onopen = function () {
+  //   setupTasks.signalServer = true;
+  //   maybeReady();
+  // };
+  baseRTC.signalServer.on('connect', function() {
+    console.log('Successfully connected to signal server');
     setupTasks.signalServer = true;
     maybeReady();
-  };
+  });
 
   // If this client will be streaming media to a peer, getMedia should be
   // called before initiating the handshake (offer/answer) process. (Adding
@@ -185,7 +191,7 @@ var makeBaseRTC = function (options) {
   // doesn't know what to do. See the handler for details on how these fields are used.
   baseRTC._send = function (message, recipient, messageType) {
     // Since SDPs are not natively JavaScript, the SDP is encapsulated in a SessionDescription object.
-    this.signalServer.send(JSON.stringify({
+    this.signalServer.emit('msg', JSON.stringify({
       sender: this.me,
       room: this.room,
       recipient: recipient,
@@ -197,7 +203,7 @@ var makeBaseRTC = function (options) {
   // Handles the process of peers accepting offers from other peers.
   // Message structure is described in _send.
   var onMessage = function (message) {
-    var data = JSON.parse(message.data);
+    var data = JSON.parse(message);
 
     // Screen out messages we don't care about. This is a hack to make up
     // for the signal server sending everything to everyone. Really, the
@@ -255,7 +261,11 @@ var makeBaseRTC = function (options) {
   };
 
   // Use onMessage to handle messages coming from signal server
-  baseRTC.signalServer.onmessage = onMessage.bind(baseRTC);
+  // baseRTC.signalServer.onmessage = onMessage.bind(baseRTC);
+  baseRTC.signalServer.on('msg', onMessage.bind(baseRTC));
+  // baseRTC.signalServer.on('msg', function(message) {
+  //   console.log('Got message from server', message);
+  // })
 
   // Peer connections emit events, like onaddstream and onremovestream.
   // .on allows you to specify handlers for those events. The handler
