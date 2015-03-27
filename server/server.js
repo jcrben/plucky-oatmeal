@@ -161,30 +161,15 @@ var server = app.listen(servePort, function(){
 // client that sent it (which we need for our test code to run with both
 // RTC clients in same browser... I think).
 var io = require('socket.io')(server);
-// var WebSocketServer = require('ws').Server;
-
-// var wsServer = new WebSocketServer({ server: server });
-
-// Utility function to broadcast a message to all connected clients,
-// totally indiscriminately
-// wsServer.broadcast = function (data) {
-//   this.clients.forEach(function (client) {
-//     client.send(data);  //send to all clients, including initial sender
-//   });
-// };
 
 // When we get new connections, set each connection up with
 // an onmessage handler that will broadcast any messages it
 // sends to all other connections (using the broadcast utility fn above)
 io.on('connection', function (socket) {
+  console.log('Received connection');
+  socket.emit('msg', {hello: 'world'});
   socket.on('msg', function (message) {
     console.log('broadcasting message', message);
     io.emit('msg', message);
   });
 });
-// wsServer.on('connection', function (ws) {
-//   ws.on('message', function (message) {
-//     console.log('broadcasting message', message);
-//     wsServer.broadcast(message);
-//   });
-// });
