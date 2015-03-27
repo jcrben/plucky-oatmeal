@@ -96,6 +96,15 @@ micControllers.controller('AudienceControl', ['$scope', '$sce', 'audienceRTC', '
   console.log($rootScope.details);
 
   $scope.micStatus = {power: false, command: "Turn on your mic!"};
+  $scope.feedback = [
+    'THRWOAAME',
+    'PTWGFMD',
+    'FTWEFM',
+    'WNTR',
+    'BTWU',
+    'CTWBFMD',
+    'BHRFSOME'
+  ];
 
   // only provide connect and disconnect functionality after ready (signal server is up, we have a media stream)
   audienceRTC.ready(function () {
@@ -132,6 +141,8 @@ micControllers.controller('AudienceControl', ['$scope', '$sce', 'audienceRTC', '
         closePeerConnection($scope.roomName, $scope.presenter, $scope.username);
       }
     };
+
+
 
     // if you your handler updates the $scope, you need to call $scope.$apply
     // so angular knows to run a digest.
