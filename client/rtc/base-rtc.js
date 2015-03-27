@@ -191,19 +191,19 @@ var makeBaseRTC = function (options) {
   // doesn't know what to do. See the handler for details on how these fields are used.
   baseRTC._send = function (message, recipient, messageType) {
     // Since SDPs are not natively JavaScript, the SDP is encapsulated in a SessionDescription object.
-    this.signalServer.emit('msg', JSON.stringify({
+    this.signalServer.emit('msg', {
       sender: this.me,
       room: this.room,
       recipient: recipient,
       type: messageType,
       contents: message
-    }));
+    });
   };
 
   // Handles the process of peers accepting offers from other peers.
   // Message structure is described in _send.
   var onMessage = function (message) {
-    var data = JSON.parse(message);
+    var data = message;
 
     // Screen out messages we don't care about. This is a hack to make up
     // for the signal server sending everything to everyone. Really, the
