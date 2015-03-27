@@ -51,6 +51,10 @@
   "bugs": {
     "url": "https://github.com/careful-harmonica/plucky-oatmeal/issues"
   },
+  "engines": {
+    "node": "0.12.x",
+    "npm": "2.5.x"
+  },
   "homepage": "https://github.com/careful-harmonica/plucky-oatmeal",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
